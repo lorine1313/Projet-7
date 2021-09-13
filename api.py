@@ -74,4 +74,4 @@ def predict(id_client):
 
 # Lancement de l'appli	
 if __name__ == "__main__":
-	flaskapp.run(debug=True)
+	flask.run(debug=True)
