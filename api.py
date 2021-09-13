@@ -73,5 +73,5 @@ def predict(id_client):
 					'prediction' : predic[0][1]})
 
 # Lancement de l'appli	
-#if __name__ == "__main__":
-	#app.run()
+if __name__ == "__main__":
+	app.run()
