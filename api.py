@@ -72,21 +72,6 @@ def predict(id_client):
 	return jsonify({ 'client' : clt2,
 					'prediction' : predic[0][1]})
 
-# Comparaison des clients proches
-clt_compa = pd.get_dummies(df.loc[:,['CODE_GENDER_F','CODE_GENDER_M','DAYS_BIRTH','AMT_INCOME_TOTAL','AMT_ANNUITY','AMT_CREDIT','DAYS_EMPLOYED']])
-tree = KDTree(clt_compa,leaf_size=40)
-@app.route('/assimiles/<id_client>', methods=['GET'])
-def assimile(id_client):
-	ind = tree.query(clt_compa.loc[id_client:id_client], k=10)[1][0]
-	data_vois = df.iloc[ind]
-	predict_vois = 100*LGB.predict_proba(data_vois).mean(axis=0)[1]
-	mean_vois = pd.DataFrame(data_vois.mean(), columns=['voisins']).T
-	mean_vois_json = json.loads(mean_vois.to_json())
-	print(ind)
-	
-	return jsonify({ 'mean' : mean_vois_json,
-					'prediction' : predict_vois})    
-
 # Lancement de l'appli	
 if __name__ == "__main__":
 	app.run()
